@@ -1,6 +1,9 @@
 // Configuration des jeux
 const createIframeGame = (url) => ({
   mount: (container) => {
+    // Nettoyer le conteneur avant d'ajouter l'iframe
+    container.innerHTML = '';
+    
     // Création de l'iframe pour le jeu
     const iframe = document.createElement('iframe');
     iframe.src = url;
