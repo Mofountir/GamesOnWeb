@@ -85,8 +85,10 @@ export const gameModules = {
   'collision': () => Promise.resolve({ 
     default: createIframeGame('https://walgrim-dev.github.io/obstacle-game-js/') 
   }),
-  'candy-crush': () => Promise.resolve({ default: placeholderGame }),
-  '3d-land': () => Promise.resolve({ default: placeholderGame })
+  '3d-land': () => Promise.resolve({ 
+    default: createIframeGame('https://babylon-game-umber.vercel.app/') 
+  }),
+  'candy-crush': () => Promise.resolve({ default: placeholderGame })
 };
 
 // Jeu placeholder pour les jeux non encore développés
@@ -110,11 +112,3 @@ const placeholderGame = {
   }
 };
 
-// Interface commune pour tous les jeux
-export const gameInterface = {
-  mount: (container, options) => ({}),
-  unmount: () => {},
-  pause: () => {},
-  resume: () => {},
-  reset: () => {}
-};
