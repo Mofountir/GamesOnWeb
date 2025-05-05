@@ -61,22 +61,25 @@ const createIframeGame = (url) => ({
       pause: () => {
         try {
           iframe.contentWindow.postMessage({ type: 'PAUSE_GAME' }, '*');
-        } catch (e) {
+        } catch {
           console.log('Pause - Non supporté');
         }
       },
       resume: () => {
         try {
           iframe.contentWindow.postMessage({ type: 'RESUME_GAME' }, '*');
-        } catch (e) {
+        } catch {
           console.log('Resume - Non supporté');
         }
       },
       reset: () => {
         try {
           iframe.contentWindow.postMessage({ type: 'RESET_GAME' }, '*');
-        } catch (e) {
-          iframe.src = iframe.src; // Fallback: recharge l'iframe
+        } catch {
+          // Recharge l'iframe en modifiant son URL
+          const currentSrc = iframe.src;
+          iframe.src = '';
+          setTimeout(() => { iframe.src = currentSrc; }, 0);
         }
       }
     };
@@ -91,7 +94,7 @@ export const gameModules = {
   '3d-land': () => Promise.resolve({ 
     default: createIframeGame('https://babylon-game-umber.vercel.app/') 
   }),
-  'candy-crush': () => Promise.resolve({ default: placeholderGame })
+  'goomba-challenge': () => Promise.resolve({ default: placeholderGame })
 };
 
 // Jeu placeholder pour les jeux non encore développés

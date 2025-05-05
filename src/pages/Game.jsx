@@ -213,11 +213,11 @@ export const Game = () => {
                   >
                     <div className="w-full h-full backdrop-blur rounded-xl overflow-hidden">
                       <div className={`absolute inset-0 bg-gradient-to-br ${game.color} opacity-40`} />
-                      <img
-                        src={game.thumbnail}
-                        alt={game.title}
-                        className="w-full h-48 object-cover"
-                      />
+                      <div className={`w-full h-48 bg-gradient-to-br ${game.color}`}>
+                        <div className="w-full h-full flex items-center justify-center">
+                          <span className="text-5xl">{game.icon}</span>
+                        </div>
+                      </div>
                       <div className="p-4">
                         <div className="flex items-center space-x-2 mb-2">
                           <span className="text-2xl">{game.icon}</span>

@@ -7,9 +7,9 @@ export const fr = {
     },
     // Descriptions des jeux
     games: {
-      'candy-crush': {
-        title: 'Candy Crush Mario',
-        description: 'Alignez 3 bonbons ou plus pour marquer des points',
+      'goomba-challenge': {
+        title: 'Goomba Challenge',
+        description: 'Des goombas tombent du ciel ! Évitez les au max!',
         tech: 'Manipulation DOM',
         techDesc: 'Construit avec HTML DOM, CSS et JavaScript'
       },

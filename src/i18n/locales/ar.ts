@@ -5,9 +5,9 @@ export const ar = {
       logout: 'تسجيل الخروج'
     },
     games: {
-      'candy-crush': {
-        title: 'كاندي كراش ماريو',
-        description: 'اجمع المكافآت والعملات الملونة في مغامرة ألغاز ماريو',
+      'goomba-challenge': {
+        title: 'تحدي غومبا',
+        description: 'غومبا تسقط من السماء! تجنبها قدر الإمكان!',
         tech: 'معالجة DOM',
         techDesc: 'مبني باستخدام HTML DOM وCSS وJavaScript'
       },

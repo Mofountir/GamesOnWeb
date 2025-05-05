@@ -17,11 +17,13 @@ export const GameCard = ({ game, onClick }) => {
         {/* Image du jeu avec overlay */}
         <div className="relative h-48 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent z-10" />
-          <img
-            src={game.thumbnail}
-            alt={game.title}
-            className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
-          />
+          <div 
+            className={`w-full h-full bg-gradient-to-br ${game.color} transform group-hover:scale-105 transition-transform duration-300`}
+          >
+            <div className="w-full h-full flex items-center justify-center">
+              <span className="text-5xl">{game.icon}</span>
+            </div>
+          </div>
           {/* Badge technologie */}
           <div className="absolute top-3 right-3 z-20 px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-sm">
             <div className="flex items-center space-x-1.5">

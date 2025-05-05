@@ -5,9 +5,9 @@ export const it = {
       logout: 'Esci'
     },
     games: {
-      'candy-crush': {
-        title: 'Candy Crush Mario',
-        description: 'Abbina power-up colorati e monete in questa avventura puzzle a tema Mario',
+      'goomba-challenge': {
+        title: 'Goomba Challenge',
+        description: 'I goomba cadono dal cielo! Evitali al massimo!',
         tech: 'Manipolazione DOM',
         techDesc: 'Costruito con HTML DOM, CSS e JavaScript'
       },
