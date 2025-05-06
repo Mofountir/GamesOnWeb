@@ -27,12 +27,12 @@ export const gameRules = {
       howToPlay: [
         'Utilisez les flèches directionnelles pour vous déplacer',
         'Appuyez sur Espace pour sauter par-dessus les obstacles',
-        'Collectez les pièces pour gagner des points',
+        'Collectez les étoiles pour gagner des points',
         'Évitez les obstacles pour ne pas perdre de vies'
       ],
       tips: [
         'Passez rapidement avant d\'atteindre un obstacle',
-        'Concentrez-vous sur les pièces dorées qui sont au passage entre les niveaux',
+        'Concentrez-vous sur les étoiles dorées qui sont au passage entre les niveaux',
         'Le timing est crucial pour faire plusieur niveaux.',
       ],
       additionalInfo: {
