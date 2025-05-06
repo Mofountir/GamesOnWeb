@@ -16,6 +16,7 @@ export const gameRules = {
         'Observez les motifs de chute pour prévoir les zones sûres'
       ],
       additionalInfo: {
+        technology: 'DOM',
         difficulty: 'Progressive',
         recommendedFor: 'Tous les fans de Mario',
       }
@@ -35,6 +36,7 @@ export const gameRules = {
         'Le timing est crucial pour faire plusieur niveaux.',
       ],
       additionalInfo: {
+        technology: 'Canvas',
         difficulty: 'Intermédiaire',
         recommendedFor: 'Joueurs qui aiment les défis de réflexes',
       }
@@ -52,6 +54,7 @@ export const gameRules = {
         'Utilisez la caméra (touches fléchées) pour mieux observer votre environnement'
       ],
       additionalInfo: {
+        technology: 'Babylon.js',
         difficulty: 'Variable selon les zones',
         recommendedFor: 'Explorateurs et amateurs de jeux 3D',
       }

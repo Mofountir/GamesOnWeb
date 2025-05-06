@@ -25,7 +25,7 @@ export const games = [
     description: 'Explorez. Sautez. Découvrez les secrets.',
     thumbnail: '',
     icon: '🎮',
-    technology: '3D',
+    technology: 'Babylone JS',
     techDescription: 'H: Accueil • M: Menu',
     color: 'from-green-500 to-emerald-400'
   },
