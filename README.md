@@ -7,6 +7,11 @@ Plateforme de jeux web interactive construite avec React, comprenant un système
    * Jeux Goomba (DOM): [GitHub](https://github.com/walgrim-dev/goomba-challenge), [Site](https://walgrim-dev.github.io/goomba-challenge/)
    * Jeux Mario collision (Canvas): [GitHub](https://github.com/walgrim-dev/obstacle-game-js), [Site](https://walgrim-dev.github.io/obstacle-game-js/)
    * Jeux Mario Land 3D (Babylone): [GitHub](https://github.com/GracMatteo/BabylonGame), [Site](https://babylon-game-umber.vercel.app/)
+ 
+## Membre de l'équipe:
+- Matteo Grac
+- Mannocci Michaël
+- Fountir Mohamed
 
 ## Prérequis
 - Node.js
