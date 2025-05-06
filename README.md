@@ -2,6 +2,11 @@
 
 ## Description
 Plateforme de jeux web interactive construite avec React, comprenant un système d'authentification et une collection de jeux accessibles.
+- Repos:
+   * Site Web: [GitHub](https://github.com/Mofountir/GamesOnWeb), [Site](https://games-on-web-plum.vercel.app/)
+   * Jeux Goomba (DOM): [GitHub](https://github.com/walgrim-dev/goomba-challenge), [Site](https://walgrim-dev.github.io/goomba-challenge/)
+   * Jeux Mario collision (Canvas): [GitHub](https://github.com/walgrim-dev/obstacle-game-js), [Site](https://walgrim-dev.github.io/obstacle-game-js/)
+   * Jeux Mario Land 3D (Babylone): [GitHub](https://github.com/GracMatteo/BabylonGame), [Site](https://babylon-game-umber.vercel.app/)
 
 ## Prérequis
 - Node.js
