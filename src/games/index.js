@@ -94,8 +94,10 @@ export const gameModules = {
   '3d-land': () => Promise.resolve({ 
     default: createIframeGame('https://babylon-game-umber.vercel.app/') 
   }),
-  'goomba-challenge': () => Promise.resolve({ default: placeholderGame })
-};
+  'goomba-challenge': () => Promise.resolve({ 
+    default: createIframeGame('https://walgrim-dev.github.io/goomba-challenge/') 
+  }),
+}
 
 // Jeu placeholder pour les jeux non encore développés
 const placeholderGame = {
