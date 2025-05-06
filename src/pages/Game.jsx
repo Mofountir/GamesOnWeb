@@ -2,8 +2,9 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { games } from '../data/games';
+import { getGameRules } from '../data/rules';
 import { gameModules } from '../games';
-import { Code2 } from 'lucide-react';
+import { Code2, Info } from 'lucide-react';
 
 export const Game = () => {
   const { id } = useParams();
@@ -13,6 +14,7 @@ export const Game = () => {
   const [isPaused, setIsPaused] = useState(false);         // État de pause
   const [showPauseMenu, setShowPauseMenu] = useState(false); // Menu de pause (touche P)
   const [showRotaryMenu, setShowRotaryMenu] = useState(false); // Menu rotatif (touche M)
+  const [showRules, setShowRules] = useState(false);       // Panneau des règles (touche I)
   const [selectedIndex, setSelectedIndex] = useState(0);    // Sélection dans le menu rotatif
   
   // Références
@@ -52,6 +54,7 @@ export const Game = () => {
               gameInstanceRef.current.resume();
               setShowPauseMenu(false);
               setShowRotaryMenu(false);
+              setShowRules(false);
             } else {
               gameInstanceRef.current.pause();
               setShowPauseMenu(true);
@@ -64,6 +67,32 @@ export const Game = () => {
           if (isPaused) {
             setShowRotaryMenu(!showRotaryMenu);
             setShowPauseMenu(false);
+            setShowRules(false);
+          }
+          break;
+
+        case 'i': // Touche I : Afficher/masquer les règles du jeu
+          if (gameInstanceRef.current) {
+            if (showRules) {
+              // Si les règles sont déjà affichées, les fermer
+              setShowRules(false);
+              // Si on était en pause avant d'ouvrir les règles, revenir au menu de pause
+              // sinon reprendre le jeu
+              if (isPaused && !showPauseMenu) {
+                setShowPauseMenu(true);
+              } else if (!isPaused) {
+                gameInstanceRef.current.resume();
+              }
+            } else {
+              // Si les règles ne sont pas affichées, les ouvrir
+              if (!isPaused) {
+                gameInstanceRef.current.pause();
+                setIsPaused(true);
+              }
+              setShowRules(true);
+              setShowPauseMenu(false);
+              setShowRotaryMenu(false);
+            }
           }
           break;
 
@@ -77,6 +106,7 @@ export const Game = () => {
             setIsPaused(false);
             setShowPauseMenu(false);
             setShowRotaryMenu(false);
+            setShowRules(false);
           }
           break;
 
@@ -101,22 +131,47 @@ export const Game = () => {
             setIsPaused(false);
           }
           break;
+          
+        case 'escape':
+          // Fermer les règles si elles sont affichées
+          if (showRules) {
+            setShowRules(false);
+            if (isPaused && !showPauseMenu) {
+              setShowPauseMenu(true);
+            } else if (isPaused) {
+              setIsPaused(false);
+              gameInstanceRef.current?.resume();
+            }
+          }
+          // Si on est dans d'autres menus, les gérer ici
+          else if (showRotaryMenu) {
+            setShowRotaryMenu(false);
+            setShowPauseMenu(true);
+          } else if (showPauseMenu) {
+            setShowPauseMenu(false);
+            setIsPaused(false);
+            gameInstanceRef.current?.resume();
+          }
+          break;
       }
     };
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [isPaused, showRotaryMenu, showPauseMenu, selectedIndex]);
+  }, [isPaused, showRotaryMenu, showPauseMenu, showRules, selectedIndex]);
 
   // Si le jeu n'est pas trouvé
   const gameInfo = games.find(g => g.id === id);
   if (!gameInfo) return null;
+  
+  // Récupération des règles du jeu
+  const gameRulesInfo = getGameRules(id);
 
   return (
     <div className="relative w-full h-screen bg-gray-900">
       {/* Instructions */}
       <div className="absolute top-4 left-4 z-50 text-white/60 text-sm">
-        P: Pause • R: Recommencer • H: Accueil {isPaused && '• M: Menu rotatif'}
+        P: Pause • I: Règles • R: Recommencer • H: Accueil {isPaused && '• M: Menu rotatif'}
       </div>
 
       {/* Zone de jeu */}
@@ -157,6 +212,16 @@ export const Game = () => {
                   className="w-full p-2 bg-blue-500 hover:bg-blue-600 rounded"
                 >
                   Recommencer
+                </button>
+                <button
+                  onClick={() => {
+                    setShowPauseMenu(false);
+                    setShowRules(true);
+                  }}
+                  className="w-full p-2 bg-indigo-500 hover:bg-indigo-600 rounded flex items-center justify-center"
+                >
+                  <Info size={18} className="mr-2" />
+                  Règles du jeu
                 </button>
                 <button
                   onClick={() => navigate('/hub')}
@@ -236,6 +301,99 @@ export const Game = () => {
             </div>
             <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white/60 text-sm">
               ← → pour naviguer • Entrée pour sélectionner • M pour fermer
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Panneau des règles du jeu (touche I) */}
+      <AnimatePresence>
+        {showRules && (
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -50 }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            className="absolute inset-y-0 left-0 w-80 bg-gray-800/90 backdrop-blur-sm flex flex-col z-50 shadow-lg"
+          >
+            <div className="p-6 flex-1 overflow-y-auto">
+              <div className="flex items-center mb-4">
+                <span className="text-3xl mr-3">{gameInfo.icon}</span>
+                <h2 className="text-2xl font-bold text-white">{gameInfo.title}</h2>
+              </div>
+              
+              <div className="mb-6">
+                <h3 className="text-lg font-semibold text-white mb-2 border-b border-white/20 pb-1">Comment jouer</h3>
+                <p className="text-gray-300 mb-4">{gameInfo.description}</p>
+                
+                {/* Instructions spécifiques au jeu - Chargées depuis rules.jsx */}
+                <div className="space-y-2 text-gray-300 text-sm">
+                  {gameRulesInfo.howToPlay.map((instruction, index) => (
+                    <p key={`howto-${index}`}>• {instruction}</p>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="mb-6">
+                <h3 className="text-lg font-semibold text-white mb-2 border-b border-white/20 pb-1">Astuces</h3>
+                <div className="space-y-2 text-gray-300 text-sm">
+                  {gameRulesInfo.tips.map((tip, index) => (
+                    <p key={`tip-${index}`}>• {tip}</p>
+                  ))}
+                </div>
+              </div>
+              
+              <div>
+                <h3 className="text-lg font-semibold text-white mb-2 border-b border-white/20 pb-1">Informations</h3>
+                <div className="space-y-2 text-gray-300 text-sm">
+                  <p>• Technologie: {gameInfo.technology}</p>
+                  <p>• Difficulté: {gameRulesInfo.additionalInfo.difficulty}</p>
+                  <p>• Recommandé pour: {gameRulesInfo.additionalInfo.recommendedFor}</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="p-4 bg-gray-900/70 flex justify-between items-center">
+              <button
+                onClick={() => {
+                  setShowRules(false);
+                  if (isPaused && !showPauseMenu) {
+                    setShowPauseMenu(true);
+                  }
+                }}
+                className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 rounded text-white text-sm"
+              >
+                Fermer
+              </button>
+              
+              <button
+                onClick={() => {
+                  setShowRules(false);
+                  setIsPaused(false);
+                  if (gameInstanceRef.current) {
+                    gameInstanceRef.current.resume();
+                  }
+                }}
+                className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded text-white text-sm"
+              >
+                Reprendre le jeu
+              </button>
+            </div>
+            
+            <div className="absolute top-4 right-4">
+              <button
+                onClick={() => {
+                  setShowRules(false);
+                  if (isPaused && !showPauseMenu) {
+                    setShowPauseMenu(true);
+                  }
+                }}
+                className="p-1 bg-gray-700 hover:bg-gray-600 rounded-full text-white/70"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+              </button>
             </div>
           </motion.div>
         )}
